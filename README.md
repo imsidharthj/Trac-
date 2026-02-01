@@ -6,7 +6,9 @@ Tracé is an AI code reviewer that doesn't just read your code—it witnesses it
 
 > *"Don't just say you tested it. Prove it."*
 
-[![Demo Video](https://img.shields.io/badge/▶️_Watch_Demo-Google_Drive-blue)](https://drive.google.com/file/d/1BTaBhK1iAAzUaaKkIfL0z3RY1QcEPWCu/view?usp=sharing)
+## 🎬 Demo Video
+
+[![Watch Demo Video](https://img.shields.io/badge/▶️_Watch_Demo-Google_Drive-blue)](https://drive.google.com/file/d/1BTaBhK1iAAzUaaKkIfL0z3RY1QcEPWCu/view?usp=sharing)
 
 ---
 
@@ -35,7 +37,7 @@ Tracé is an AI code reviewer that doesn't just read your code—it witnesses it
 
 ## 🚀 Quick Start
 
-### 1. Clone & Install
+### Clone & Install
 
 ```bash
 # Clone the repository
@@ -48,29 +50,6 @@ uv tool install .
 # Or via pip
 pip install -e .
 ```
-
-### 2. Configure Your LLM
-
-```bash
-# Set your API key (choose one)
-export OPENAI_API_KEY="sk-..."       # For OpenAI
-export GEMINI_API_KEY="..."          # For Google Gemini
-export ANTHROPIC_API_KEY="..."       # For Anthropic Claude
-
-# Configure the model
-trace config set --model gpt-4o
-trace config show
-```
-
-**Supported Models:**
-
-| Model | Provider | Notes |
-|-------|----------|-------|
-| `gpt-4o` | OpenAI | High quality, multimodal |
-| `gpt-4o-mini` | OpenAI | Faster, cheaper |
-| `gemini/gemini-1.5-pro` | Google | Recommended: Long context, fast |
-| `gemini/gemini-2.0-flash` | Google | Latest Gemini model |
-| `claude-3-5-sonnet-20241022` | Anthropic | Best for code |
 
 ---
 
