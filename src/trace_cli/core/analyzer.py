@@ -398,8 +398,8 @@ def call_llm(
         api_key = config.get_api_key()
         if not api_key:
             console.print("[red]Error:[/red] No API key configured.")
-            console.print("[dim]Set an environment variable (GEMINI_API_KEY, OPENAI_API_KEY, etc.)")
-            console.print("or run: trace config set --api-key-env YOUR_ENV_VAR[/dim]")
+            console.print("[dim]Set an environment variable (GEMINI_API_KEY, OPENAI_API_KEY, etc.)[/dim]")
+            console.print("[dim]or run: trace config set --api-key-env YOUR_ENV_VAR[/dim]")
             return None
         
         # Configure litellm

@@ -155,6 +155,22 @@ def run_and_capture(
     stdout_str = "".join(stdout_buffer)
     stderr_str = "".join(stderr_buffer)
     
+    # === REDACT: Remove sensitive data before storage ===
+    from .redaction import redact_text, print_redaction_warning
+    
+    stdout_redaction = redact_text(stdout_str)
+    stderr_redaction = redact_text(stderr_str)
+    
+    # Store redacted versions
+    stdout_redacted = stdout_redaction.redacted_text
+    stderr_redacted = stderr_redaction.redacted_text
+    
+    # Warn about redacted content (to stderr for MCP compatibility)
+    total_redactions = stdout_redaction.redaction_count + stderr_redaction.redaction_count
+    if total_redactions > 0 and not quiet:
+        all_redactions = stdout_redaction.redactions + stderr_redaction.redactions
+        print_redaction_warning(all_redactions)
+    
     # === FOOTER: Results indicator ===
     if not quiet:
         output_console.print()  # Spacing after command output
@@ -171,6 +187,9 @@ def run_and_capture(
         footer.append(f"  │  {duration_ms}ms", style="dim")
         footer.append(f"  │  Session: {session_id}", style="dim")
         
+        if total_redactions > 0:
+            footer.append(f"  │  🔒 {total_redactions} redacted", style="yellow")
+        
         footer_style = "green" if exit_code == 0 else "red"
         output_console.print(Panel(
             footer,
@@ -178,15 +197,16 @@ def run_and_capture(
             padding=(0, 1),
         ))
     
-    # === SAVE: Evidence to .ai/ ===
+    # === SAVE: Evidence to .ai/ (with redacted content) ===
     evidence_path = save_evidence(
         session_id=session_id,
         command=command,
         exit_code=exit_code,
-        stdout=stdout_str,
-        stderr=stderr_str,
+        stdout=stdout_redacted,  # Use redacted version
+        stderr=stderr_redacted,  # Use redacted version
         duration_ms=duration_ms,
         base_path=base_path,
+        metadata={"redactions": total_redactions} if total_redactions > 0 else None,
     )
     
     if not quiet:
