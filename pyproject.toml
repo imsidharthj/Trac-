@@ -1,0 +1,47 @@
+[project]
+name = "trace-cli"
+version = "0.1.0"
+description = "Tracé — The Agentic AI PR Reviewer & Evidence Collector"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Tracé Team" }
+]
+keywords = ["cli", "code-review", "ai", "developer-tools", "git"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
+dependencies = [
+    "typer[all]>=0.9.0",
+    "rich>=13.0.0",
+    "litellm>=1.30.0",
+    "gitpython>=3.1.0",
+    "jinja2>=3.1.0",
+    "mcp>=1.0.0",
+]
+
+[project.scripts]
+trace = "trace_cli.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trace_cli"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+]
